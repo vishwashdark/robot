@@ -1,0 +1,25 @@
+<launch>
+  <!-- Argument for the robot model -->
+  <arg name="model" default="$(find owl_robot_description)/urdf/owl_robot.urdf" />
+
+  <!-- Robot Description Parameter -->
+  <param name="robot_description" command="cat $(arg model)" />
+
+  <!-- Robot State Publisher Node -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+    <param name="publish_frequency" type="double" value="50.0" />
+    <param name="tf_prefix" type="string" value="" />
+  </node>
+
+  <!-- Joint State Publisher Node -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen" />
+
+  <!-- Static Transform Publisher (optional, if you need a map frame) -->
+  <!--
+  <node pkg="tf" type="static_transform_publisher" name="map_to_base_link" args="0 0 0 0 0 0 map base_link 100" />
+  -->
+
+  <!-- RViz Node -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find owl_robot_description)/rviz/owl_robot.rviz" />
+
+</launch>
